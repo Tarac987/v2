@@ -1,12 +1,15 @@
 from sqlalchemy.orm import Session
 from models.utilisateur import Utilisateur
+from utils.security import encrypt_password, decrypt_password
 
 class UtilisateurController:
-    def __init__(self, db: Session):
+    def __init__(self, db: Session, key: bytes):
         self.db = db
+        self.key = key
 
     def create_utilisateur(self, nom: str, code_personnel: str, mot_de_passe: str, role: str):
-        utilisateur = Utilisateur(nom=nom, code_personnel=code_personnel, mot_de_passe=mot_de_passe, role=role)
+        encrypted_password = encrypt_password(mot_de_passe, self.key)
+        utilisateur = Utilisateur(nom=nom, code_personnel=code_personnel, mot_de_passe=encrypted_password, role=role)
         self.db.add(utilisateur)
         self.db.commit()
         return utilisateur
@@ -22,7 +25,7 @@ class UtilisateurController:
         if utilisateur:
             utilisateur.nom = nom
             utilisateur.code_personnel = code_personnel
-            utilisateur.mot_de_passe = mot_de_passe
+            utilisateur.mot_de_passe = encrypt_password(mot_de_passe, self.key)
             utilisateur.role = role
             self.db.commit()
         return utilisateur
@@ -36,6 +39,6 @@ class UtilisateurController:
 
     def authenticate_utilisateur(self, code_personnel: str, mot_de_passe: str):
         utilisateur = self.get_utilisateur_by_code_personnel(code_personnel)
-        if utilisateur and utilisateur.mot_de_passe == mot_de_passe:
+        if utilisateur and decrypt_password(utilisateur.mot_de_passe, self.key) == mot_de_passe:
             return utilisateur
         return None

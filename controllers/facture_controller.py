@@ -22,14 +22,16 @@ class FactureController:
             facture.montant_total = montant_total
             facture.date_echeance = date_echeance
             self.db.commit()
-        return facture
+            return facture
+        return None
 
     def delete_facture(self, facture_id: int):
         facture = self.get_facture(facture_id)
         if facture:
             self.db.delete(facture)
             self.db.commit()
-        return facture
+            return facture
+        return None
 
     def get_reglements_facture(self, facture_id: int):
         facture = self.get_facture(facture_id)
@@ -37,20 +39,55 @@ class FactureController:
             return facture.reglements
         return []
 
-    def calculer_paiement_final(self, facture_id: int):
+    def create_reglement(self, facture_id: int, montant: float, date: datetime, moyen_paiement: str):
+        facture = self.get_facture(facture_id)
+        if facture:
+            reglement = Reglement(id_facture=facture_id, montant=montant, date=date, moyen_paiement=moyen_paiement)
+            self.db.add(reglement)
+            self.db.commit()
+            self.calculer_encaisssement(facture_id)  # Mettre à jour l'encaissement après ajout
+            return reglement
+        return None
+
+    def update_reglement(self, reglement_id: int, montant: float, date: datetime, moyen_paiement: str):
+        reglement = self.db.query(Reglement).filter(Reglement.id == reglement_id).first()
+        if reglement:
+            facture_id = reglement.id_facture
+            reglement.montant = montant
+            reglement.date = date
+            reglement.moyen_paiement = moyen_paiement
+            self.db.commit()
+            self.calculer_encaisssement(facture_id)  # Mettre à jour l'encaissement après modification
+            return reglement
+        return None
+
+    def delete_reglement(self, reglement_id: int):
+        reglement = self.db.query(Reglement).filter(Reglement.id == reglement_id).first()
+        if reglement:
+            facture_id = reglement.id_facture
+            self.db.delete(reglement)
+            self.db.commit()
+            self.calculer_encaisssement(facture_id)  # Mettre à jour l'encaissement après suppression
+            return reglement
+        return None
+
+    def calculer_encaisssement(self, facture_id: int):
         facture = self.get_facture(facture_id)
         if not facture:
             return None
         
         total_reglements = sum(reglement.montant for reglement in facture.reglements)
         
-        facture.paiement_final = total_reglements
+        facture.encaissement = total_reglements
         self.db.commit()
         
-        return facture.paiement_final
+        return facture.encaissement
 
     def get_factures_due(self):
         return self.db.query(Facture).filter(Facture.date_echeance < datetime.now()).all()
 
     def get_factures_unpaid(self):
-        return self.db.query(Facture).filter(Facture.paiement_final < Facture.montant_total).all()
+        return self.db.query(Facture).filter(Facture.encaissement < Facture.montant_total).all()
+        
+    def get_all_factures(self):
+        return self.db.query(Facture).all()

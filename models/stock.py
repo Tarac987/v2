@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Float, ForeignKey
+from sqlalchemy.orm import relationship
 from .base import Base
 
 class Stock(Base):
@@ -6,6 +7,13 @@ class Stock(Base):
     id = Column(Integer, primary_key=True, index=True)
     nom_produit = Column(String, index=True)
     quantite = Column(Integer)
-    prix = Column(Float)
+    prix_achat_unitaire_ht = Column(Float)
+    taux_tva_achat = Column(Float)
+    montant_tva_achat = Column(Float)
+    prix_vente_unitaire_ht = Column(Float)
+    taux_tva_vente = Column(Float)
     id_fournisseur = Column(Integer, ForeignKey("fournisseurs.id"))
-    tva = Column(Float)
+    
+    fournisseur = relationship("Fournisseur", back_populates="stocks")
+    
+  

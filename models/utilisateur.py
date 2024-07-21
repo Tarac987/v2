@@ -11,3 +11,7 @@ class Utilisateur(Base):
 
     def est_admin(self):
         return self.role == "admin"
+
+    def verify_password(self, mot_de_passe):
+        # Implement password verification logic here
+        return self.mot_de_passe == mot_de_passe

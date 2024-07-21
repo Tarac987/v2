@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Float, ForeignKey
+from sqlalchemy.orm import relationship
 from .base import Base
 
 class Fournisseur(Base):
@@ -9,3 +10,6 @@ class Fournisseur(Base):
     adresse = Column(String)
     email = Column(String, unique=True, index=True)
     telephone = Column(String, unique=True)
+    
+    # Define relationship to Stock
+    stocks = relationship('Stock', back_populates='fournisseur')
