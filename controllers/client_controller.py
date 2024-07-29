@@ -5,8 +5,8 @@ class ClientController:
     def __init__(self, db: Session):
         self.db = db
 
-    def create_client(self, nom: str, adresse: str, email: str, telephone: str):
-        client = Client(nom=nom, adresse=adresse, email=email, telephone=telephone)
+    def create_client(self, nom: str, prenom: str, email: str, telephone: str):
+        client = Client(nom=nom, prenom=prenom, email=email, telephone=telephone)
         self.db.add(client)
         self.db.commit()
         return client
@@ -14,11 +14,11 @@ class ClientController:
     def get_client(self, client_id: int):
         return self.db.query(Client).filter(Client.id == client_id).first()
 
-    def update_client(self, client_id: int, nom: str, adresse: str, email: str, telephone: str):
+    def update_client(self, client_id: int, nom: str, prenom: str, email: str, telephone: str):
         client = self.get_client(client_id)
         if client:
             client.nom = nom
-            client.adresse = adresse
+            client.prenom = prenom
             client.email = email
             client.telephone = telephone
             self.db.commit()

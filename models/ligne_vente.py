@@ -1,3 +1,4 @@
+#ligne_vente.py
 from sqlalchemy import Column, Integer, Float, ForeignKey
 from .base import Base
 

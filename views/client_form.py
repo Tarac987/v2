@@ -1,20 +1,19 @@
-# views/client_form.py
-
-import os
-
 from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton, QMessageBox, QToolButton
-from PyQt5.QtGui import QFont, QIcon, QPixmap
-from PyQt5.QtCore import QSize, Qt
+from PyQt5.QtGui import QFont, QIcon
+from PyQt5.QtCore import QSize, Qt, pyqtSignal
 from PyQt5.Qt import QStyle
 
 from views.base_form import BaseForm
 from controllers.client_controller import ClientController
 
 class ClientForm(BaseForm):
+    client_added = pyqtSignal()  # Signal personnalisé
+
     def __init__(self, db_session):
         super().__init__('Formulaire Client')
         self.db_session = db_session
         self.client_controller = ClientController(self.db_session)
+        self.init_ui()
         
     def init_ui(self):
         # Ajouter la légende avec une police plus petite
@@ -103,7 +102,7 @@ class ClientForm(BaseForm):
     
     def enregistrer_client(self):
         nom = self.nom_edit.text()
-        prenom = self.prenom_edit.text()
+        prenom = self.prenom_edit.text()  # Capture le prénom
         telephone = self.telephone_edit.text()
         email = self.email_edit.text()
         
@@ -120,6 +119,8 @@ class ClientForm(BaseForm):
             if client:
                 self.show_message('Succès', 'Client enregistré avec succès.', QMessageBox.Information)
                 self.clear_fields()
+                self.client_added.emit()  # Émettre le signal
+                self.close()  # Fermer le formulaire
         else:
             self.show_message('Erreur', 'Veuillez remplir tous les champs obligatoires.', QMessageBox.Warning)
     
@@ -128,4 +129,3 @@ class ClientForm(BaseForm):
         self.prenom_edit.clear()
         self.telephone_edit.clear()
         self.email_edit.clear()
-

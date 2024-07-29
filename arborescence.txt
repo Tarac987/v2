@@ -1,0 +1,68 @@
+hotua_caisse/
+│
+├── config.py
+├── controllers/
+│   ├── avoir_controller.py
+│   ├── client_controller.py
+│   ├── code_comptable_controller.py
+│   ├── commande_controller.py
+│   ├── depo_bancaire_controller.py
+│   ├── devis_controller.py
+│   ├── facture_controller.py
+│   ├── fournisseur_controller.py
+│   ├── informations_bancaires_controller.py
+│   ├── ligne_achat_controller.py
+│   ├── ligne_vente_controller.py
+│   ├── solde_controller.py
+│   ├── stock_controller.py
+│   ├── transaction_achat_controller.py
+│   ├── transaction_vente_controller.py
+│   ├── tva_controller.py
+│   └── utilisateur_controller.py
+│
+├── database.py
+├── gui/
+│   ├── admin_setup_dialog.py
+│   ├── login_dialog.py
+│   ├── main_window.py
+│   └── __pycache__
+│
+├── main.py
+├── models/
+│   ├── avoir.py
+│   ├── base.py
+│   ├── client.py
+│   ├── code_comptable.py
+│   ├── commande.py
+│   ├── depot_bancaire.py
+│   ├── devis.py
+│   ├── facture.py
+│   ├── fournisseur.py
+│   ├── informations_bancaires.py
+│   ├── ligne_achat.py
+│   ├── ligne_vente.py
+│   ├── reglement.py
+│   ├── solde.py
+│   ├── stock.py
+│   ├── transaction_achat.py
+│   ├── transaction_vente.py
+│   ├── tva.py
+│   └── utilisateur.py
+│
+├── requirements.txt
+├── secret.key
+├── services/
+│   └── auth.py
+│
+├── session.py
+├── utils/
+│   └── security.py
+│
+└── views/
+    ├── avoir_form.py
+    ├── base_form.py
+    ├── client_form.py
+    ├── code_comptable_form.py
+    ├── fournisseur_form.py
+    ├── stock_form.py
+    └── taux_tva_form.py

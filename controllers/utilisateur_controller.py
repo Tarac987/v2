@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from models.utilisateur import Utilisateur
-from utils.security import encrypt_password, decrypt_password
+from utils.security import encrypt_password
 
 class UtilisateurController:
     def __init__(self, db: Session, key: bytes):
@@ -39,6 +39,6 @@ class UtilisateurController:
 
     def authenticate_utilisateur(self, code_personnel: str, mot_de_passe: str):
         utilisateur = self.get_utilisateur_by_code_personnel(code_personnel)
-        if utilisateur and decrypt_password(utilisateur.mot_de_passe, self.key) == mot_de_passe:
+        if utilisateur and utilisateur.verify_password(mot_de_passe):
             return utilisateur
         return None

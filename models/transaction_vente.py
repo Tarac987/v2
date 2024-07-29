@@ -1,3 +1,4 @@
+#transaction_vente.py
 from sqlalchemy import Column, Integer, Float, DateTime, ForeignKey
 from .base import Base
 
@@ -10,3 +11,4 @@ class TransactionVente(Base):
     tva_total = Column(Float)
     prix_total_ttc = Column(Float)
     moyen_paiement = Column(String)
+    

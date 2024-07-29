@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String
-from .base import Base
+from models.base import Base
+from utils.security import check_password
 
 class Utilisateur(Base):
     __tablename__ = "utilisateurs"
@@ -13,5 +14,4 @@ class Utilisateur(Base):
         return self.role == "admin"
 
     def verify_password(self, mot_de_passe):
-        # Implement password verification logic here
-        return self.mot_de_passe == mot_de_passe
+        return check_password(mot_de_passe, self.mot_de_passe)
