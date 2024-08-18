@@ -1,0 +1,35 @@
+gestion_societe/
+│
+├── controllers/               # Contient les contrôleurs pour gérer les opérations CRUD
+│   ├── client_controller.py       # Contrôleur pour la gestion des clients
+│   ├── fournisseur_controller.py  # Contrôleur pour la gestion des fournisseurs
+│   ├── produit_controller.py      # Contrôleur pour la gestion des produits
+│   ├── seuil_produit_controller.py # Contrôleur pour la gestion des seuils de commande
+│   └── __pycache__/               # Fichiers bytecode Python
+│
+├── gui/                       # Interface utilisateur et gestion des fenêtres
+│   ├── client_form.py             # Formulaire de gestion des clients
+│   ├── fournisseur_form.py        # Formulaire de gestion des fournisseurs
+│   ├── produit_form.py            # Formulaire de gestion des produits
+│   ├── seuil_form.py              # Formulaire de gestion des seuils de commande
+│   ├── main_window.py             # Fenêtre principale de l'application
+│   ├── stock_management.py        # Interface de gestion des stocks
+│   ├── __init__.py                # Fichier d'initialisation du package
+│   └── __pycache__/               # Fichiers bytecode Python
+│
+├── models/                    # Contient les modèles de données et la configuration de la base de données
+│   ├── base.py                    # Configuration de la base de données et déclaration de la classe Base
+│   ├── client.py                  # Modèle de la table Client
+│   ├── fournisseur.py             # Modèle de la table Fournisseur
+│   ├── produit.py                 # Modèle de la table Produit
+│   ├── seuil_produit.py           # Modèle de la table SeuilProduit
+│   ├── __init__.py                # Fichier d'initialisation du package
+│   └── __pycache__/               # Fichiers bytecode Python
+│
+├── gestion_société.db          # Base de données SQLite pour stocker les données
+│
+├── main.py                    # Point d'entrée principal du programme
+│
+├── test.py                    # Fichier de test ou de développement temporaire
+│
+└── structure.txt              # Description ou documentation de la structure du projet
