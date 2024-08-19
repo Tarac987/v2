@@ -47,15 +47,15 @@ class FournisseurForm(QWidget):
         self.setLayout(layout)
 
     def submit_form(self):
-        nom = self.nom_input.text().strip()
+        nom = self.societe_input.text().strip()
         prenom = self.prenom_input.text().strip()
         telephone = self.telephone_input.text().strip()
-
-        if not nom or not prenom or not telephone:
-            QMessageBox.warning(self, "Erreur de Validation", "Les champs Nom, Prénom et Téléphone sont obligatoires.")
-            return
-
         societe = self.societe_input.text().strip()
+
+        if not societe or not telephone:
+            QMessageBox.warning(self, "Erreur de Validation", "Les champs Société et Téléphone sont obligatoires.")
+            return
+      
         contact = self.contact_input.text().strip()
         email = self.email_input.text().strip()
         self.controller.create_fournisseur(societe, nom, prenom, contact, email, telephone)

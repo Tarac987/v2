@@ -7,7 +7,7 @@ class Sav(Base):
     __tablename__ = 'sav'
 
     id = Column(Integer, primary_key=True, index=True)
-    client_id = Column(Integer, ForeignKey('clients.id'))
+    client_id = Column(Integer, ForeignKey('client.id'))
     date_arrivee = Column(Date, nullable=False)
     type_appareil = Column(String, nullable=False)
     marque = Column(String, nullable=False)

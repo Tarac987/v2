@@ -3,11 +3,11 @@ from sqlalchemy.orm import relationship
 from models.base import Base
 
 class Produit(Base):
-    __tablename__ = 'produits'
+    __tablename__ = 'produit'
 
     id = Column(Integer, primary_key=True, index=True)
     reference_fournisseur = Column(String, nullable=False)
-    fournisseur_id = Column(Integer, ForeignKey('fournisseurs.id'))
+    fournisseur_id = Column(Integer, ForeignKey('fournisseur.id'))
     designation = Column(String, nullable=False)
     prix_achat_ht = Column(Float, nullable=False)
     taux_tva_achat = Column(Float, nullable=False)
@@ -21,4 +21,4 @@ class Produit(Base):
     quantite = Column(Integer, nullable=False)
 
     # Relation avec Fournisseur
-    fournisseur = relationship("Fournisseur", back_populates="produits")
+    fournisseur = relationship("Fournisseur", back_populates="produit")

@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 from models.base import Base
 
 class Fournisseur(Base):
-    __tablename__ = 'fournisseurs'
+    __tablename__ = 'fournisseur'
 
     id = Column(Integer, primary_key=True, index=True)
     societe = Column(String, nullable=False)
@@ -14,4 +14,4 @@ class Fournisseur(Base):
     telephone = Column(String, nullable=False)
 
     # Relation avec Produit
-    produits = relationship("Produit", back_populates="fournisseur")
+    produit = relationship("Produit", back_populates="fournisseur")

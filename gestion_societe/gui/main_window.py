@@ -10,6 +10,7 @@ from gui.produit_form import ProduitForm
 from gui.stock_management import StockManagementWindow
 from gui.seuil_form import SeuilForm
 from gui.sav_management import SavManagementWindow
+from gui.caisse_widget import CaisseWidget  # Importer CaisseWidget
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -60,8 +61,8 @@ class MainWindow(QMainWindow):
         factures_button = QPushButton("Factures")
         recu_button = QPushButton("Reçus")
         stocks_button = QPushButton("Gestion des Stocks")
-        sav_button = QPushButton("SAV")  # Ajout du bouton SAV
-        location_button = QPushButton("Location")  # Ajout du bouton Location
+        sav_button = QPushButton("SAV")
+        location_button = QPushButton("Location")
         bank_button = QPushButton("Mouvements Bancaires")
 
         nav_layout.addWidget(dashboard_button)
@@ -70,20 +71,20 @@ class MainWindow(QMainWindow):
         nav_layout.addWidget(factures_button)
         nav_layout.addWidget(recu_button)
         nav_layout.addWidget(stocks_button)
-        nav_layout.addWidget(sav_button)  # Ajout du bouton SAV
-        nav_layout.addWidget(location_button)  # Ajout du bouton Location
+        nav_layout.addWidget(sav_button)
+        nav_layout.addWidget(location_button)
         nav_layout.addWidget(bank_button)
 
         # Stacked Widget pour changer de section
         self.stack = QStackedWidget()
         self.stack.addWidget(self.create_dashboard())
-        self.stack.addWidget(self.create_caisse())
+        self.stack.addWidget(self.create_caisse())  # Utilise CaisseWidget
         self.stack.addWidget(self.create_devis())
         self.stack.addWidget(self.create_factures())
         self.stack.addWidget(self.create_recu())
         self.stack.addWidget(StockManagementWindow())
-        self.stack.addWidget(SavManagementWindow())  # Ajout de l'onglet SAV
-        self.stack.addWidget(self.create_location())  # Ajout de l'onglet Location
+        self.stack.addWidget(SavManagementWindow())
+        self.stack.addWidget(self.create_location())
         self.stack.addWidget(self.create_bank())
 
         # Connecter les boutons de navigation aux widgets
@@ -93,8 +94,8 @@ class MainWindow(QMainWindow):
         factures_button.clicked.connect(lambda: self.stack.setCurrentIndex(3))
         recu_button.clicked.connect(lambda: self.stack.setCurrentIndex(4))
         stocks_button.clicked.connect(lambda: self.stack.setCurrentIndex(5))
-        sav_button.clicked.connect(lambda: self.stack.setCurrentIndex(6))  # Onglet SAV
-        location_button.clicked.connect(lambda: self.stack.setCurrentIndex(7))  # Onglet Location
+        sav_button.clicked.connect(lambda: self.stack.setCurrentIndex(6))
+        location_button.clicked.connect(lambda: self.stack.setCurrentIndex(7))
         bank_button.clicked.connect(lambda: self.stack.setCurrentIndex(8))
 
         # Ajouter la navigation et le stack au layout principal
@@ -103,6 +104,7 @@ class MainWindow(QMainWindow):
 
         self.setCentralWidget(central_widget)
 
+    # Méthodes existantes pour créer les sections
     def create_dashboard(self):
         dashboard_widget = QWidget()
         layout = QVBoxLayout(dashboard_widget)
@@ -111,11 +113,7 @@ class MainWindow(QMainWindow):
         return dashboard_widget
 
     def create_caisse(self):
-        caisse_widget = QWidget()
-        layout = QVBoxLayout(caisse_widget)
-        layout.addWidget(QLabel("Saisie de caisse", alignment=Qt.AlignCenter))
-        layout.addWidget(QLabel("Fonctionnalités de gestion de caisse"))
-        return caisse_widget
+        return CaisseWidget()  # Utilise le widget de caisse
 
     def create_devis(self):
         devis_widget = QWidget()

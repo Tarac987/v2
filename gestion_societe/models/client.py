@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship
 from models.base import Base
 
 class Client(Base):
-    __tablename__ = 'clients'
+    __tablename__ = 'client'
 
     id = Column(Integer, primary_key=True, index=True)
     nom = Column(String, nullable=False)
@@ -14,3 +14,6 @@ class Client(Base):
 
     # Relation avec le SAV
     sav = relationship("Sav", back_populates="client")
+    
+    # Relation avec les transactions de vente
+    transactions = relationship("TransactionVente", back_populates="client")
